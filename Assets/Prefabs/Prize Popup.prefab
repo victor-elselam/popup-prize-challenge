@@ -341,6 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   closeButton: {fileID: 8387153416168719460}
   prizeBoxView: {fileID: 1748774333779607079}
+  wheel: {fileID: 25735314504283435}
 --- !u!1 &8387153416960574769
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,6 +544,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 951192650414983853}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &25735314504283435 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 966090894841708422, guid: 6dfcf979700e183488f721ffc76febbf,
+    type: 3}
+  m_PrefabInstance: {fileID: 951192650414983853}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d92dd4f9af06454c97d7c4bc15df34e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3652175513853300832
 PrefabInstance:
   m_ObjectHideFlags: 0

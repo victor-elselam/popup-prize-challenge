@@ -1,77 +1,56 @@
-﻿using System;
-using System.Linq;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PrizePopupView : MonoBehaviour
 {
-    public Action OnClose;
-
-    
     [SerializeField] private Button closeButton;
     [SerializeField] private PrizeBoxView prizeBoxView;
+    [SerializeField] private WheelView wheel;
 
-    private IServerService serverService;
+    private IPrizePopupController popupController;
 
-    public void Start()
+    public void OnInitialize(IPrizePopupController popupController)
     {
+        this.popupController = popupController;
+
         prizeBoxView.OnSpin += Spin;
-        closeButton.onClick.AddListener(() => OnClose?.Invoke());
+        popupController.OnPrizeFetch += UpdateView;
+        popupController.OnError += ShowError;
+        popupController.OnCloseWindow += CloseWindow;
+
+        //this event we don't need to unsubscribe because it's a UnityEvent, and Unity deals with it's unsubscription for us.
+        closeButton.onClick.AddListener(popupController.CloseWindow);
     }
 
-    public void OnDestroy()
+    private void OnDestroy()
     {
+        //remove events to avoid leaks, since we're not using UnityEvents here
         prizeBoxView.OnSpin -= Spin;
+        popupController.OnPrizeFetch -= UpdateView;
+        popupController.OnError -= ShowError;
+        popupController.OnCloseWindow -= CloseWindow;
+    }
+
+    public void Spin()
+    {
+        popupController.FetchPrizeInfo();
+        StartCoroutine(wheel.StartSpin());
     }
     
-    public void OnInitialize(IServerService serverService)
+    public void UpdateView(int initialValue, int multiplierValue, int totalResultValue)
     {
-        this.serverService = serverService;
+        StartCoroutine(InternalUpdateView(initialValue, multiplierValue, totalResultValue));
     }
 
-    //todo: split this business logics to a controller
-    public async void Spin()
+    private IEnumerator InternalUpdateView(int initialValue, int multiplierValue, int totalResultValue)
     {
-        var initialPrizeResponse = await serverService.GetInitialWin();
-        var multiplierResponse = await serverService.GetMultiplier();
-        var currentPlayerBalanceResponse = await serverService.GetPlayerBalance();
-        if (!OkStatus(out var error, initialPrizeResponse, multiplierResponse, currentPlayerBalanceResponse))
-        {
-            Debug.LogError(error);
-            return;
-        }
-
-        var finalPrize = initialPrizeResponse.Result * multiplierResponse.Result;
-        var finalPlayerBalance = currentPlayerBalanceResponse.Result + finalPrize;
-
-        UpdateView(initialPrizeResponse.Result, multiplierResponse.Result, finalPrize);
-
-        var setResult = await serverService.SetPlayerBalance(finalPlayerBalance);
-        if (!OkStatus(out error, setResult))
-        {
-            Debug.LogError($"[Balance] - Error setting player balance: {error}");
-            return;
-        }
-
-        Debug.Log($"[Balance] - Final player balance: {finalPlayerBalance}");
-
-        bool OkStatus(out string errorMessage, params HttpResponse[] httpResponses)
-        {
-            errorMessage = null;
-            var allOk = httpResponses.All(http => http.Status == HttpStatus.Ok);
-            if (!allOk)
-                errorMessage = httpResponses.First(http => http.Status != HttpStatus.Ok).Body;
-
-            return allOk;
-        }
+        //view logics is a lot easier with coroutines
+        yield return wheel.StopAtTarget(multiplierValue);
+        prizeBoxView.SetValues(initialValue, multiplierValue, totalResultValue);
     }
 
     public void CloseWindow() => gameObject.SetActive(false);
-
-    public void UpdateView(int initialValue, int multiplierValue, int totalResultValue)
-    {
-        prizeBoxView.SetValues(initialValue, multiplierValue, totalResultValue);
-    }
 
     public void ShowError(string error)
     {

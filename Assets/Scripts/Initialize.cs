@@ -9,6 +9,8 @@ public class Initialize : MonoBehaviour
     private void Start()
     {
         serverService = new ServerService(new Server.API.GameplayApi());
-        Instantiate(popupView).OnInitialize(serverService);
+
+        var popupController = new PrizePopupController(serverService);
+        Instantiate(popupView).OnInitialize(popupController);
     }
 }

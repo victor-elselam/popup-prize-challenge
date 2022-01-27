@@ -14,7 +14,20 @@ public class PrizeBoxView : MonoBehaviour
 
     private void Start()
     {
-        spinButton.onClick.AddListener(() => OnSpin?.Invoke());
+        ClearFields();
+
+        spinButton.onClick.AddListener(() =>
+        {
+            OnSpin?.Invoke();
+            ClearFields();
+        });
+    }
+
+    private void ClearFields()
+    {
+        initialPrize.text = string.Empty;
+        multiplier.text = string.Empty;
+        totalResult.text = string.Empty;
     }
 
     public void SetValues(int initialValue, int multiplierValue, int totalResultValue)
