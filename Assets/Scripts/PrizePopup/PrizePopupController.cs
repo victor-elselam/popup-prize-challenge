@@ -41,6 +41,7 @@ namespace Assets.Scripts.PrizePopup
                 return;
             }
 
+            //Logging player balance to console
             Debug.Log($"[Balance] - Final player balance: {finalPlayerBalance}");
         }
 
