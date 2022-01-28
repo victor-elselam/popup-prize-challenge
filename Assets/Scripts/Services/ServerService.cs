@@ -6,9 +6,8 @@ public class ServerService : IServerService
 {
     private readonly GameplayApi api;
 
-    //IMPORTANT: I personally don't really like using Promises in C#, so I wrapped it into Tasks with kind of a REST api,
-    //specially because this http service could change and translating into Tasks with REST api is so easier.
-    //But in a real application I can work with any async technology you want :) 
+    //IMPORTANT: I personally don't really like using Promises in C#, so I wrapped it into Tasks with kind of a REST api.
+    //But in a real application I can work with any async concept you want :) 
     public ServerService(GameplayApi api)
     {
         this.api = api;

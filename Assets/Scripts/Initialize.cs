@@ -1,16 +1,19 @@
-﻿
+﻿using Assets.Scripts.PrizePopup;
 using UnityEngine;
 
-public class Initialize : MonoBehaviour
+namespace Assets.Scripts
 {
-    [SerializeField] private PrizePopupView popupView;
-    private IServerService serverService; 
-    
-    private void Start()
+    public class Initialize : MonoBehaviour
     {
-        serverService = new ServerService(new Server.API.GameplayApi());
+        [SerializeField] private PrizePopupView popupView;
+        private IServerService serverService;
 
-        var popupController = new PrizePopupController(serverService);
-        Instantiate(popupView).OnInitialize(popupController);
+        private void Start()
+        {
+            serverService = new ServerService(new Server.API.GameplayApi());
+
+            var popupController = new PrizePopupController(serverService);
+            Instantiate(popupView).OnInitialize(popupController);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.PrizePopup;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class WheelPieceView : MonoBehaviour
@@ -37,6 +38,6 @@ public class WheelPieceView : MonoBehaviour
     public void SetAngle(float angle)
     {
         Angle = Mathf.Abs(angle);
-        transform.eulerAngles = new Vector3(0, 0, angle);
+        transform.localEulerAngles = new Vector3(0, 0, angle);
     }
 }

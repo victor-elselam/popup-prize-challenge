@@ -1,13 +1,16 @@
 ﻿using System;
 
-public interface IPrizePopupController
+namespace Assets.Scripts.PrizePopup
 {
-    event Action<string> OnError;
-    event Action<int, int, int> OnPrizeFetch;
-    event Action OnCloseWindow;
+    public interface IPrizePopupController
+    {
+        event Action<string> OnError;
+        event Action<int, int, int> OnPrizeFetch;
+        event Action OnCloseWindow;
 
-    void CloseWindow();
-    void FetchPrizeInfo();
+        void CloseWindow();
+        void FetchPrizeInfo();
+    }
 }
 
 //luscav2m
