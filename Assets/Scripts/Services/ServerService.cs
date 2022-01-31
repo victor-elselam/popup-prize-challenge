@@ -8,6 +8,7 @@ public class ServerService : IServerService
 
     //IMPORTANT: I personally don't really like using Promises in C#, so I wrapped it into Tasks with kind of a REST api.
     //But in a real application I can work with any async concept you want :) 
+    //also, a small drawback of native C# Tasks is that breakpoints can't really tell you what's happening, but this is solved by using the UniTask framework
     public ServerService(GameplayApi api)
     {
         this.api = api;

@@ -12,5 +12,3 @@ namespace Assets.Scripts.PrizePopup
         void FetchPrizeInfo();
     }
 }
-
-//luscav2m

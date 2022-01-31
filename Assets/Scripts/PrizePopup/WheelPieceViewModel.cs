@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Assets.Scripts.PrizePopup
 {
     [Serializable]
-    public class PieceViewModel
+    public class WheelPieceViewModel
     {
         public int Value;
         public Sprite Sprite;

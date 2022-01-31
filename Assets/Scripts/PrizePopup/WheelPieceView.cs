@@ -11,7 +11,7 @@ public class WheelPieceView : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private Canvas overrideCanvas;
 
-    public void SetNumber(PieceViewModel pieceView)
+    public void SetNumber(WheelPieceViewModel pieceView)
     {
         Number = pieceView.Value;
 
@@ -37,7 +37,7 @@ public class WheelPieceView : MonoBehaviour
 
     public void SetAngle(float angle)
     {
-        Angle = Mathf.Abs(angle);
-        transform.localEulerAngles = new Vector3(0, 0, angle);
+        Angle = angle;
+        transform.eulerAngles = new Vector3(0, 0, angle);
     }
 }
