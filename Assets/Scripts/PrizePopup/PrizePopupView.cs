@@ -48,7 +48,7 @@ namespace Assets.Scripts.PrizePopup
 
         private IEnumerator InternalUpdateView(int initialValue, int multiplierValue, int totalResultValue)
         {
-            //view logics is a lot easier with coroutines
+            //view logics are a lot easier with coroutines
 
             yield return prizeBoxView.SetInitialValue(initialValue);
             yield return wheel.StopAtTarget(multiplierValue);

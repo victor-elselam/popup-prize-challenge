@@ -277,7 +277,6 @@ MonoBehaviour:
   pivot: {fileID: 8743306797961306114}
   startSpeed: 273
   decreaseStep: 0.1
-  CurrentNormalizedAngle: 0
 --- !u!1 &8743306797686447437
 GameObject:
   m_ObjectHideFlags: 0
